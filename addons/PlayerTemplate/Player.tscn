@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cebobosnviiwx"]
+
+[ext_resource type="Script" path="res://addons/PlayerTemplate/Player.gd" id="1_8rxl0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p60og"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_8rxl0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_p60og")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Head"]
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Head/SpringArm3D"]
+update_position = false
+update_scale = false
+
+[node name="Camera3D" type="Camera3D" parent="Head/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0)

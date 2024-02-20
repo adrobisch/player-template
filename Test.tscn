@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://nidgpkfyg1b4"]
+
+[ext_resource type="Script" path="res://Test.gd" id="1_36c31"]
+[ext_resource type="PackedScene" uid="uid://cebobosnviiwx" path="res://addons/PlayerTemplate/Player.tscn" id="1_jkg4u"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5owrj"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_5qeg8"]
+sky_material = SubResource("ProceduralSkyMaterial_5owrj")
+
+[sub_resource type="Environment" id="Environment_qeqds"]
+background_mode = 2
+sky = SubResource("Sky_5qeg8")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5kwvy"]
+size = Vector2(25, 25)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lgh2n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_khour"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="Scene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0815773, -1.43051e-06, 0.163605)
+script = ExtResource("1_36c31")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qeqds")
+
+[node name="Ground" type="CSGMesh3D" parent="."]
+use_collision = true
+mesh = SubResource("PlaneMesh_5kwvy")
+
+[node name="Player" parent="." instance=ExtResource("1_jkg4u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.40078, 0)
+remote_transform_path = NodePath("Body")
+
+[node name="Body" type="CSGMesh3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_lgh2n")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Player/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.500731, -0.0274055, 0)
+material = SubResource("StandardMaterial3D_khour")
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.806702, 2.33783, 3.01521)
+use_collision = true
+size = Vector3(2.6134, 5.67566, 1)
+
+[node name="RemoteTransformedBox" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.806702, 2.78853, -3.63085)
+use_collision = true
+size = Vector3(2.6134, 1.68597, 1)
